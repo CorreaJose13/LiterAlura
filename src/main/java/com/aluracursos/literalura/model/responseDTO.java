@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record BodyDTO(
+public record responseDTO(
         @JsonAlias("results") List<BookDTO> bookList,
         @JsonAlias("count") int count
 ) {

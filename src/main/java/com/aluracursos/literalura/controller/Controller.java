@@ -1,6 +1,6 @@
 package com.aluracursos.literalura.controller;
 
-import com.aluracursos.literalura.model.BodyDTO;
+import com.aluracursos.literalura.model.responseDTO;
 import com.aluracursos.literalura.model.BookDTO;
 import com.aluracursos.literalura.service.ApiConsumer;
 import com.aluracursos.literalura.service.OMapper;
@@ -16,7 +16,7 @@ public class Controller {
         String bookFormatted = bookName.replace(" ","%20");
         HttpResponse<String> response = consumer.getResponse(baseURL+"?"+bookFormatted);
         String body = consumer.responseBody(response);
-        var bodyDTO = mapper.convertData(body, BodyDTO.class);
+        var bodyDTO = mapper.convertData(body, responseDTO.class);
         if (bodyDTO.count() == 0){
             return null;
         }
