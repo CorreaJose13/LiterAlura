@@ -7,10 +7,11 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record BodyDTO(
-        @JsonAlias("results") List<BookDTO> bookList
+        @JsonAlias("results") List<BookDTO> bookList,
+        @JsonAlias("count") int count
 ) {
     @Override
     public String toString() {
-        return "List of books: " + bookList;
+        return "Result: " + bookList;
     }
 }
