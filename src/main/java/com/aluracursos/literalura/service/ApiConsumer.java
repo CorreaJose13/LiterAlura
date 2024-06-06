@@ -24,7 +24,4 @@ public class ApiConsumer {
         return response.body();
     }
 
-    public int responseStatusCode(HttpResponse<String> response){
-        return response.statusCode();
-    }
 }
