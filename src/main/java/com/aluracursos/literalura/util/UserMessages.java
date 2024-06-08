@@ -37,4 +37,6 @@ public class UserMessages {
     public static String goodByeMessage (){
         return "Thanks for using my service, see you soon!";
     }
+
+    public static String notFoundMessage (String bookName) {return "Sorry! Your book called "+ bookName +" was not found.";}
 }
