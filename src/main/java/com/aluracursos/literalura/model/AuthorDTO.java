@@ -13,6 +13,6 @@ public record AuthorDTO(
     public String toString() {
         return " name: "+ name +
                 ", birth year: " + birthYear +
-                ", death year: " + birthYear ;
+                ", death year: " + deathYear ;
     }
 }
