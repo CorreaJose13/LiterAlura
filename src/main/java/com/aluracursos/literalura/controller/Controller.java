@@ -24,16 +24,13 @@ public class Controller {
             throw new NameNotFoundException();
         }
         var bookList = responseDTO.bookList();
-        System.out.println(bookList);
         return bookList.get(0);
     }
 
     public Book getBook (String bookName){
         try {
             BookDTO bookDTO = searchBook(bookName);
-            var book = new Book(bookDTO);
-            System.out.println(book);
-            return book;
+            return new Book(bookDTO);
         }catch (NameNotFoundException e){
             System.out.println(UserMessages.notFoundMessage(bookName));
             return null;
