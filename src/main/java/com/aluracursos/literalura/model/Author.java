@@ -36,4 +36,14 @@ public class Author {
     public int getDeath_year() {
         return death_year;
     }
+
+    @Override
+    public String toString() {
+        return """
+                ----- Author -----
+                Name: %s
+                Birth year: %d
+                Death year: %d
+                """.formatted(getName(),getBirth_year(),getDeath_year());
+    }
 }
