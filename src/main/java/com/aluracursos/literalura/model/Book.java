@@ -2,9 +2,6 @@ package com.aluracursos.literalura.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Entity
 @Table(name = "books")
 public class Book {
@@ -31,22 +28,46 @@ public class Book {
         return title;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public Author getAuthor() {
         return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
     public String getLanguage() {
         return language;
     }
 
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
     public int getDownloadCount() {
         return downloadCount;
+    }
+
+    public void setDownloadCount(int downloadCount) {
+        this.downloadCount = downloadCount;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override
     public String toString() {
         return """
-                ----- BOOK FOUND -----
+                ----- BOOK -----
                 Title: %s
                 Author: %s
                 Language: %s
