@@ -7,14 +7,12 @@ import com.aluracursos.literalura.repository.Repository;
 import com.aluracursos.literalura.util.Input;
 import com.aluracursos.literalura.util.UserMessages;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Principal {
     private final Scanner reader = new Scanner(System.in);
     private final Controller controller = new Controller();
-    private final ArrayList<Book> books = new ArrayList<>();
     private final Repository repository;
 
     private boolean retry=true;
