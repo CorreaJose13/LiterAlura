@@ -18,7 +18,6 @@ public class Controller {
         String bookFormatted = bookName.replace(" ","+").toLowerCase();
         String url = BASE_URL+bookFormatted;
         String body = consumer.responseBody(consumer.getResponse(url));
-        System.out.println(body);
         var responseDTO = mapper.convertData(body, responseDTO.class);
         if (responseDTO.count() == 0){
             throw new NameNotFoundException();
