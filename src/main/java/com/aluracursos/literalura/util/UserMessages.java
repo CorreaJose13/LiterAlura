@@ -34,6 +34,16 @@ public class UserMessages {
         return "You've selected option "+option;
     }
 
+    public static String searchBook () { return "Type the name of the book you wanna search:";}
+
+    public static String listBooks () { return "Here's a list of searched books:";}
+
+    public static String listAuthors () { return "Here's a list of authors:";}
+
+    public static String listAuthorsAlive (int year) { return "Here's a list of authors alive at " + year + ":";}
+
+    public static String listBookByLang (String lang) { return "Here's a list of books in " + lang + ":";}
+
     public static String goodByeMessage (){
         return "Thanks for using my service, see you soon!";
     }
