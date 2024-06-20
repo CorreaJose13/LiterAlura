@@ -69,23 +69,31 @@ public class UserMessages {
 
     public static String searchBook () { return "Type the name of the book you wanna search:";}
 
-    public static String listBooks () { return "Here's a list of searched books:";}
-
-    public static String listAuthors () { return "Here's a list of authors:";}
-
-    public static String listAuthorsAlive (int year) { return "Here's a list of authors alive at " + year + ":";}
-
-    public static String listBookByLang (String lang) { return "Here's a list of books in " + lang + ":";}
-
-    public static String goodByeMessage (){return "Thanks for using my service, see you soon!";}
-
     public static String savedMessage (){return "Your book was saved successfully!";}
 
     public static String alreadyExistsMessage (){return "Your book is already in our DB!";}
 
+    public static String listBooks () { return "Here's a list of searched books:";}
+
+    public static String noBooksInDB () { return "Sorry! There's no books in our DB yet.";}
+
+    public static String listAuthors () { return "Here's a list of authors:";}
+
+    public static String noAuthorsInDB () { return "Sorry! There's no authors in our DB yet.";}
+
+    public static String listAuthorsAlive (int year) { return "Here's a list of authors alive at " + year + ":";}
+
+    public static String authorsFound (int count){return "We found " + count + ((count==1)? " author that matches your choice": " authors that matches your choice");}
+
+    public static String noAuthorsFound (){return "Sorry! We couldn't find any authors that matches your choice";}
+
+    public static String listBookByLang (String lang) { return "Here's a list of books in " + lang + ":";}
+
     public static String booksFound (int count){return "We found " + count + ((count==1)? " book that matches your choice": " books that matches your choice");}
 
     public static String noBooksFound (){return "Sorry! We couldn't find any books that matches your choice";}
+
+    public static String goodByeMessage (){return "Thanks for using my service, see you soon!";}
 
     public static String notFoundMessage (String bookName) {return "Sorry! Your book called "+ bookName +" was not found.";}
 }
