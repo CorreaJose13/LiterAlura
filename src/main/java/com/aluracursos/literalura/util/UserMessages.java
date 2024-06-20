@@ -61,17 +61,15 @@ public class UserMessages {
                 """;
     }
 
-    public static String returnOption (int option){
-        return "You've selected option "+option;
-    }
+    public static String returnOption (int option){ return "You've selected option "+option;}
 
-    public static String invalidOption (){return "Invalid option. Please enter a valid value!";}
+    public static String invalidOption (){ return "Invalid option. Please enter a valid value!";}
 
     public static String searchBook () { return "Type the name of the book you wanna search:";}
 
-    public static String savedMessage (){return "Your book was saved successfully!";}
+    public static String savedMessage (){ return "Your book was saved successfully!";}
 
-    public static String alreadyExistsMessage (){return "Your book is already in our DB!";}
+    public static String alreadyExistsMessage (){ return "Your book is already in our DB!";}
 
     public static String listBooks () { return "Here's a list of searched books:";}
 
@@ -81,19 +79,21 @@ public class UserMessages {
 
     public static String noAuthorsInDB () { return "Sorry! There's no authors in our DB yet.";}
 
+    public static String searchYear () { return "Type the year that you are looking for:";}
+
     public static String listAuthorsAlive (int year) { return "Here's a list of authors alive at " + year + ":";}
 
-    public static String authorsFound (int count){return "We found " + count + ((count==1)? " author that matches your choice": " authors that matches your choice");}
+    public static String authorsFound (int count){ return "We found " + count + ((count==1)? " author that matches your choice": " authors that matches your choice");}
 
-    public static String noAuthorsFound (){return "Sorry! We couldn't find any authors that matches your choice";}
+    public static String noAuthorsFound (){ return "Sorry! We couldn't find any authors that matches your choice";}
 
     public static String listBookByLang (String lang) { return "Here's a list of books in " + lang + ":";}
 
-    public static String booksFound (int count){return "We found " + count + ((count==1)? " book that matches your choice": " books that matches your choice");}
+    public static String booksFound (int count){ return "We found " + count + ((count==1)? " book that matches your choice": " books that matches your choice");}
 
-    public static String noBooksFound (){return "Sorry! We couldn't find any books that matches your choice";}
+    public static String noBooksFound (){ return "Sorry! We couldn't find any books that matches your choice";}
 
-    public static String goodByeMessage (){return "Thanks for using my service, see you soon!";}
+    public static String goodByeMessage (){ return "Thanks for using my service, see you soon!";}
 
-    public static String notFoundMessage (String bookName) {return "Sorry! Your book called "+ bookName +" was not found.";}
+    public static String notFoundMessage (String bookName) { return "Sorry! Your book called "+ bookName +" was not found.";}
 }
