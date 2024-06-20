@@ -24,6 +24,6 @@ public interface Repository extends JpaRepository<Author, Long> {
     @Query("SELECT l FROM Author a JOIN a.bookList l")
     List<Book> searchAllBooks();
 
-    @Query("SELECT l FROM AUTHOR a JOIN a.bookList l WHERE l.language = :language")
+    @Query("SELECT l FROM Author a JOIN a.bookList l WHERE l.language = :language")
     List<Book> searchBooksByLang(String language);
 }
