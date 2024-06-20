@@ -44,6 +44,22 @@ public class UserMessages {
                 """;
     }
 
+    public static String langOption (){
+        return """
+                -----------------------------
+                
+                Choose the language of the books that you want to search:
+                
+                 1. English
+                 2. Spanish
+                 3. French
+                 4. Portuguese
+                
+                -----------------------------
+                
+                """;
+    }
+
     public static String returnOption (int option){
         return "You've selected option "+option;
     }
