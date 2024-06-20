@@ -13,7 +13,7 @@ public class Input {
                 validInput = true;
             } else {
                 System.out.println("That's not a valid integer. Please try again.");
-                reader.next();
+                reader.nextLine();
             }
         }
         return option;
