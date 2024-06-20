@@ -54,7 +54,8 @@ public class UserMessages {
                  2. Spanish
                  3. French
                  4. Portuguese
-                
+                 0. Exit this option
+              
                 -----------------------------
                 
                 """;
@@ -81,6 +82,10 @@ public class UserMessages {
     public static String savedMessage (){return "Your book was saved successfully!";}
 
     public static String alreadyExistsMessage (){return "Your book is already in our DB!";}
+
+    public static String booksFound (int count){return "We found " + count + ((count==1)? " book that matches your choice": " books that matches your choice");}
+
+    public static String noBooksFound (){return "Sorry! We couldn't find any books that matches your choice";}
 
     public static String notFoundMessage (String bookName) {return "Sorry! Your book called "+ bookName +" was not found.";}
 }
