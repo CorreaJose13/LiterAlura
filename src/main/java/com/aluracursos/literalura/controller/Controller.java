@@ -26,13 +26,7 @@ public class Controller {
         return bookList.get(0);
     }
 
-    public Book getBook (String bookName){
-        try {
-            BookDTO bookDTO = searchBook(bookName);
-            return new Book(bookDTO);
-        }catch (NameNotFoundException e){
-            System.out.println(UserMessages.notFoundMessage(bookName));
-            return null;
-        }
+    public Book getBook (BookDTO bookDTO){
+        return new Book(bookDTO);
     }
 }
