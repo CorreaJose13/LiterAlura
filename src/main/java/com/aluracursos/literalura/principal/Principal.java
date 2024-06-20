@@ -75,42 +75,58 @@ public class Principal {
         return option;
     }
 
-    private void searchBookByTitle(){
+    private BookDTO getBookDTO() {
         System.out.println(UserMessages.searchBook());
         String bookTitle = reader.nextLine();
         BookDTO bookDTO;
         try {
             bookDTO = controller.searchBook(bookTitle);
+            return bookDTO;
         } catch (NameNotFoundException e) {
             System.out.println(UserMessages.notFoundMessage(bookTitle));
+            return null;
+        }
+    }
+
+    private void saveNewBook (Author author, Book newBook) {
+        List<Book> oldBooks = repository.searchBooksFromAuthors(author.getName());
+        List<Book> bookList = new ArrayList<>(oldBooks);
+        bookList.add(newBook);
+        author.setBookList(bookList);
+        repository.save(author);
+        System.out.println(UserMessages.savedMessage());
+    }
+
+    private void saveNewAuthor (Author author, Book newBook) {
+        List<Book>  bookList = new ArrayList<>();
+        bookList.add(newBook);
+        author.setBookList(bookList);
+        repository.save(author);
+        System.out.println(UserMessages.savedMessage());
+    }
+
+    private void searchBookByTitle(){
+        BookDTO newBookDTO = getBookDTO();
+        if (newBookDTO == null){
             return;
         }
-        Book newBook = controller.getBook(bookDTO);
+        Book newBook = controller.getBook(newBookDTO);
         System.out.println(newBook);
         boolean retry= true;
         while (retry){
             int option = getSaveOption();
             switch (option){
                 case 1:
-                    List<Book> bookList = new ArrayList<>();
-                    Author author = bookDTO.auth().stream().map(Author::new).toList().get(0);
+                    Author author = newBookDTO.auth().stream().map(Author::new).toList().get(0);
                     Optional<Author> authorQuery= repository.findByName(author.getName());
                     if (authorQuery.isEmpty()){
-                        bookList.add(newBook);
-                        author.setBookList(bookList);
-                        repository.save(author);
-                        System.out.println(UserMessages.savedMessage());
+                        saveNewAuthor(author,newBook);
                         return;
                     }
                     Optional<Book> bookQuery = repository.searchBook(newBook.getTitle(), author.getName());
                     if (bookQuery.isEmpty()){
                         author= authorQuery.get();
-                        List<Book> oldBooks = repository.searchBooksFromAuthors(author.getName());
-                        bookList.addAll(oldBooks);
-                        bookList.add(newBook);
-                        author.setBookList(bookList);
-                        repository.save(author);
-                        System.out.println(UserMessages.savedMessage());
+                        saveNewBook(author,newBook);
                     }else {
                         System.out.println(UserMessages.alreadyExistsMessage());
                     }
