@@ -133,8 +133,7 @@ public class Principal {
         }
     }
 
-    private void listSearchedBooks () {
-        List<Book> books= repository.searchAllBooks();
+    private void printBooks (List<Book> books) {
         books.forEach(l -> System.out.printf("""
                 ----- BOOK -----
                 Title: %s
@@ -142,6 +141,11 @@ public class Principal {
                 Language: %s
                 Download count: %d
                 %n""", l.getTitle(),l.getAuthor().getName(),l.getLanguage(),l.getDownloadCount()));
+    }
+
+    private void listSearchedBooks () {
+        List<Book> books= repository.searchAllBooks();
+        printBooks(books);
     }
 
     private void listAuthors () {
@@ -161,11 +165,40 @@ public class Principal {
     }
 
     private void searchBooksByLang(String lang){
-
+        List<Book> booksByLang= repository.searchBooksByLang(lang);
+        if (!booksByLang.isEmpty()){
+            System.out.println(UserMessages.booksFound(booksByLang.size()));
+            printBooks(booksByLang);
+        }else {
+            System.out.println(UserMessages.noBooksFound());
+        }
     }
 
     private void listBooksByLang() {
-
+        boolean retry=true;
+        while (retry){
+            int option = getOption(UserMessages.langOption());
+            switch (option){
+                case 1:
+                    searchBooksByLang("en");
+                    return;
+                case 2:
+                    searchBooksByLang("es");
+                    return;
+                case 3:
+                    searchBooksByLang("fr");
+                    return;
+                case 4:
+                    searchBooksByLang("pt");
+                    return;
+                case 0:
+                    retry=false;
+                    break;
+                default:
+                    System.out.println(UserMessages.invalidOption());
+                    break;
+            }
+        }
     }
 
 }
