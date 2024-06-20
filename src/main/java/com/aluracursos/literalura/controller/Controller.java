@@ -18,25 +18,15 @@ public class Controller {
         String bookFormatted = bookName.replace(" ","+").toLowerCase();
         String url = BASE_URL+bookFormatted;
         String body = consumer.responseBody(consumer.getResponse(url));
-        System.out.println(body);
         var responseDTO = mapper.convertData(body, responseDTO.class);
         if (responseDTO.count() == 0){
             throw new NameNotFoundException();
         }
         var bookList = responseDTO.bookList();
-        System.out.println(bookList);
         return bookList.get(0);
     }
 
-    public Book getBook (String bookName){
-        try {
-            BookDTO bookDTO = searchBook(bookName);
-            var book = new Book(bookDTO);
-            System.out.println(book);
-            return book;
-        }catch (NameNotFoundException e){
-            System.out.println(UserMessages.notFoundMessage(bookName));
-            return null;
-        }
+    public Book getBook (BookDTO bookDTO){
+        return new Book(bookDTO);
     }
 }

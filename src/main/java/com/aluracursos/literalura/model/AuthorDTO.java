@@ -9,10 +9,4 @@ public record AuthorDTO(
         @JsonAlias("birth_year") int birthYear,
         @JsonAlias("death_year") int deathYear
 ) {
-    @Override
-    public String toString() {
-        return " name: "+ name +
-                ", birth year: " + birthYear +
-                ", death year: " + deathYear ;
-    }
 }

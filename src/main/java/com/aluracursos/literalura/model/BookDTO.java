@@ -12,14 +12,4 @@ public record BookDTO(
         @JsonAlias("languages") List<String> lang,
         @JsonAlias("download_count") Integer download
 ) {
-    @Override
-    public String toString() {
-        String languages= String.join(",", lang);
-        return "Book {" +
-                "Title: " + title +
-                ", Author: " + auth +
-                ", Language: " + languages +
-                ", Total downloads: " + download +
-                '}';
-    }
 }

@@ -10,8 +10,4 @@ public record responseDTO(
         @JsonAlias("results") List<BookDTO> bookList,
         @JsonAlias("count") int count
 ) {
-    @Override
-    public String toString() {
-        return "Result: " + bookList;
-    }
 }
