@@ -9,7 +9,6 @@ import com.aluracursos.literalura.util.Input;
 import com.aluracursos.literalura.util.UserMessages;
 
 import javax.naming.NameNotFoundException;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -145,32 +144,56 @@ public class Principal {
 
     private void listSearchedBooks () {
         List<Book> books= repository.searchAllBooks();
-        printBooks(books);
+        if (books.isEmpty()){
+            System.out.println(UserMessages.noBooksInDB());
+        }else{
+            System.out.println(UserMessages.listBooks());
+            printBooks(books);
+        }
     }
 
-    private void listAuthors () {
-        List<Author> authors= repository.findAll();
+    private void printAuthors (List<Author> authors) {
         authors.forEach(a -> System.out.printf("""
                 ----- Author -----
                 Name: %s
                 Birth year: %d
                 Death year: %d
                 Books: %s
-                """.formatted(a.getName(),a.getBirth_year(),a.getDeath_year(),a.getBookList().stream()
+                """.formatted(a.getName(),a.getBirthYear(),a.getDeathYear(),a.getBookList().stream()
                 .map(Book::getTitle).collect(Collectors.toList()))));
     }
 
-    private void listAuthorAlive() {
+    private void listAuthors () {
+        List<Author> authors= repository.findAll();
+        if (authors.isEmpty()){
+            System.out.println(UserMessages.noAuthorsInDB());
+        }else {
+            System.out.println(UserMessages.listAuthors());
+            printAuthors(authors);
+        }
+    }
 
+    private void listAuthorAlive() {
+        System.out.println(UserMessages.searchYear());
+        int year= Input.enterValidInput(reader);
+        List<Author> authorsAliveByYear= repository.searchAuthorsAliveByYear(year);
+        if (authorsAliveByYear.isEmpty()){
+            System.out.println(UserMessages.noAuthorsFound());
+        }else {
+            System.out.println(UserMessages.listAuthorsAlive(year));
+            System.out.println(UserMessages.authorsFound(authorsAliveByYear.size()));
+            printAuthors(authorsAliveByYear);
+        }
     }
 
     private void searchBooksByLang(String lang){
         List<Book> booksByLang= repository.searchBooksByLang(lang);
-        if (!booksByLang.isEmpty()){
+        if (booksByLang.isEmpty()){
+            System.out.println(UserMessages.noBooksFound());
+        }else {
+            System.out.println(UserMessages.listBookByLang(lang));
             System.out.println(UserMessages.booksFound(booksByLang.size()));
             printBooks(booksByLang);
-        }else {
-            System.out.println(UserMessages.noBooksFound());
         }
     }
 

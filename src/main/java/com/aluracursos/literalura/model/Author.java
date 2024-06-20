@@ -12,8 +12,8 @@ public class Author {
     private Long id;
     @Column(unique = true)
     private String name;
-    private int birth_year;
-    private int death_year;
+    private int birthYear;
+    private int deathYear;
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Book> bookList;
 
@@ -21,8 +21,8 @@ public class Author {
 
     public Author(AuthorDTO author){
         this.name= author.name();
-        this.birth_year= author.birthYear();
-        this.death_year= author.deathYear();
+        this.birthYear = author.birthYear();
+        this.deathYear = author.deathYear();
     }
 
     public Long getId() {
@@ -41,20 +41,20 @@ public class Author {
         this.name = name;
     }
 
-    public int getBirth_year() {
-        return birth_year;
+    public int getBirthYear() {
+        return birthYear;
     }
 
-    public void setBirth_year(int birth_year) {
-        this.birth_year = birth_year;
+    public void setBirthYear(int birthYear) {
+        this.birthYear = birthYear;
     }
 
-    public int getDeath_year() {
-        return death_year;
+    public int getDeathYear() {
+        return deathYear;
     }
 
-    public void setDeath_year(int death_year) {
-        this.death_year = death_year;
+    public void setDeathYear(int deathYear) {
+        this.deathYear = deathYear;
     }
 
     public List<Book> getBookList() {
@@ -73,6 +73,6 @@ public class Author {
                 Name: %s
                 Birth year: %d
                 Death year: %d
-                """.formatted(getName(),getBirth_year(),getDeath_year());
+                """.formatted(getName(), getBirthYear(), getDeathYear());
     }
 }
