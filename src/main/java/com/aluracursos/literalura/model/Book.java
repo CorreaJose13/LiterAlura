@@ -2,6 +2,8 @@ package com.aluracursos.literalura.model;
 
 import jakarta.persistence.*;
 
+import java.util.stream.Collectors;
+
 @Entity
 @Table(name = "books")
 public class Book {
@@ -10,16 +12,18 @@ public class Book {
     private Long id;
     @Column(unique = true)
     private String title;
-    @ManyToOne
-    private Author author;
     private String language;
     private int downloadCount;
+    @Transient
+    private String authorName;
+    @ManyToOne
+    private Author author;
 
     public Book(){}
 
     public Book(BookDTO book){
         this.title=book.title();
-        this.author=book.auth().stream().map(Author::new).toList().get(0);
+        this.authorName= book.auth().stream().limit(1).map(AuthorDTO::name).collect(Collectors.joining());
         this.language=book.lang().get(0);
         this.downloadCount= book.download();
     }
@@ -64,6 +68,14 @@ public class Book {
         this.id = id;
     }
 
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
     @Override
     public String toString() {
         return """
@@ -72,6 +84,6 @@ public class Book {
                 Author: %s
                 Language: %s
                 Download count: %d
-                """.formatted(getTitle(),author.getName(),getLanguage(),getDownloadCount());
+                """.formatted(getTitle(),getAuthorName(),getLanguage(),getDownloadCount());
     }
 }
