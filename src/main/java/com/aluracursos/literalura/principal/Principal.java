@@ -27,10 +27,18 @@ public class Principal {
         this.repository= repository;
     }
 
+    private int getOption(String message){
+        System.out.println(message);
+        int option= Input.enterValidInput(reader);
+        System.out.println(UserMessages.returnOption(option));
+        reader.nextLine();
+        return option;
+    }
+
     public void runProgram(){
         System.out.println(UserMessages.menuString());
         while (retry){
-            int option= getOption();
+            int option= getOption(UserMessages.optionString());
             switch (option){
                 case 0:
                     System.out.println(UserMessages.goodByeMessage());
@@ -59,22 +67,6 @@ public class Principal {
         reader.close();
     }
 
-    private int getOption() {
-        System.out.println(UserMessages.optionString());
-        int option= Input.enterValidInput(reader);
-        System.out.println(UserMessages.returnOption(option));
-        reader.nextLine();
-        return option;
-    }
-
-    private int getSaveOption() {
-        System.out.println(UserMessages.saveOption());
-        int option= Input.enterValidInput(reader);
-        System.out.println(UserMessages.returnOption(option));
-        reader.nextLine();
-        return option;
-    }
-
     private BookDTO getBookDTO() {
         System.out.println(UserMessages.searchBook());
         String bookTitle = reader.nextLine();
@@ -89,7 +81,7 @@ public class Principal {
     }
 
     private void saveNewBook (Author author, Book newBook) {
-        List<Book> oldBooks = repository.searchBooksFromAuthors(author.getName());
+        List<Book> oldBooks = repository.searchBooksFromAuthor(author.getName());
         List<Book> bookList = new ArrayList<>(oldBooks);
         bookList.add(newBook);
         author.setBookList(bookList);
@@ -110,11 +102,11 @@ public class Principal {
         if (newBookDTO == null){
             return;
         }
-        Book newBook = controller.getBook(newBookDTO);
+        Book newBook = new Book(newBookDTO);
         System.out.println(newBook);
         boolean retry= true;
         while (retry){
-            int option = getSaveOption();
+            int option = getOption(UserMessages.saveOption());
             switch (option){
                 case 1:
                     Author author = newBookDTO.auth().stream().map(Author::new).toList().get(0);
@@ -168,9 +160,12 @@ public class Principal {
 
     }
 
-    private void listBooksByLang() {
+    private void searchBooksByLang(String lang){
 
     }
 
+    private void listBooksByLang() {
+
+    }
 
 }
