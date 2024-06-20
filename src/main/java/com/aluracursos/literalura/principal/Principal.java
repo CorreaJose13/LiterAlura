@@ -174,7 +174,16 @@ public class Principal {
     }
 
     private void listAuthorAlive() {
-
+        System.out.println(UserMessages.searchYear());
+        int year= Input.enterValidInput(reader);
+        List<Author> authorsAliveByYear= repository.searchAuthorsAliveByYear(year);
+        if (authorsAliveByYear.isEmpty()){
+            System.out.println(UserMessages.noAuthorsFound());
+        }else {
+            System.out.println(UserMessages.listAuthorsAlive(year));
+            System.out.println(UserMessages.authorsFound(authorsAliveByYear.size()));
+            printAuthors(authorsAliveByYear);
+        }
     }
 
     private void searchBooksByLang(String lang){
