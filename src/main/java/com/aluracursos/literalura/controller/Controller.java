@@ -26,7 +26,4 @@ public class Controller {
         return bookList.get(0);
     }
 
-    public Book getBook (BookDTO bookDTO){
-        return new Book(bookDTO);
-    }
 }

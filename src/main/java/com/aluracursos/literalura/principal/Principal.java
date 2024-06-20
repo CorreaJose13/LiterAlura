@@ -27,10 +27,18 @@ public class Principal {
         this.repository= repository;
     }
 
+    private int getOption(String message){
+        System.out.println(message);
+        int option= Input.enterValidInput(reader);
+        System.out.println(UserMessages.returnOption(option));
+        reader.nextLine();
+        return option;
+    }
+
     public void runProgram(){
         System.out.println(UserMessages.menuString());
         while (retry){
-            int option= getOption();
+            int option= getOption(UserMessages.optionString());
             switch (option){
                 case 0:
                     System.out.println(UserMessages.goodByeMessage());
@@ -59,58 +67,58 @@ public class Principal {
         reader.close();
     }
 
-    private int getOption() {
-        System.out.println(UserMessages.optionString());
-        int option= Input.enterValidInput(reader);
-        System.out.println(UserMessages.returnOption(option));
-        reader.nextLine();
-        return option;
-    }
-
-    private int getSaveOption() {
-        System.out.println(UserMessages.saveOption());
-        int option= Input.enterValidInput(reader);
-        System.out.println(UserMessages.returnOption(option));
-        reader.nextLine();
-        return option;
-    }
-
-    private void searchBookByTitle(){
+    private BookDTO getBookDTO() {
         System.out.println(UserMessages.searchBook());
         String bookTitle = reader.nextLine();
         BookDTO bookDTO;
         try {
             bookDTO = controller.searchBook(bookTitle);
+            return bookDTO;
         } catch (NameNotFoundException e) {
             System.out.println(UserMessages.notFoundMessage(bookTitle));
+            return null;
+        }
+    }
+
+    private void saveNewBook (Author author, Book newBook) {
+        List<Book> oldBooks = repository.searchBooksFromAuthor(author.getName());
+        List<Book> bookList = new ArrayList<>(oldBooks);
+        bookList.add(newBook);
+        author.setBookList(bookList);
+        repository.save(author);
+        System.out.println(UserMessages.savedMessage());
+    }
+
+    private void saveNewAuthor (Author author, Book newBook) {
+        List<Book>  bookList = new ArrayList<>();
+        bookList.add(newBook);
+        author.setBookList(bookList);
+        repository.save(author);
+        System.out.println(UserMessages.savedMessage());
+    }
+
+    private void searchBookByTitle(){
+        BookDTO newBookDTO = getBookDTO();
+        if (newBookDTO == null){
             return;
         }
-        Book newBook = controller.getBook(bookDTO);
+        Book newBook = new Book(newBookDTO);
         System.out.println(newBook);
         boolean retry= true;
         while (retry){
-            int option = getSaveOption();
+            int option = getOption(UserMessages.saveOption());
             switch (option){
                 case 1:
-                    List<Book> bookList = new ArrayList<>();
-                    Author author = bookDTO.auth().stream().map(Author::new).toList().get(0);
+                    Author author = newBookDTO.auth().stream().map(Author::new).toList().get(0);
                     Optional<Author> authorQuery= repository.findByName(author.getName());
                     if (authorQuery.isEmpty()){
-                        bookList.add(newBook);
-                        author.setBookList(bookList);
-                        repository.save(author);
-                        System.out.println(UserMessages.savedMessage());
+                        saveNewAuthor(author,newBook);
                         return;
                     }
                     Optional<Book> bookQuery = repository.searchBook(newBook.getTitle(), author.getName());
                     if (bookQuery.isEmpty()){
                         author= authorQuery.get();
-                        List<Book> oldBooks = repository.searchBooksFromAuthors(author.getName());
-                        bookList.addAll(oldBooks);
-                        bookList.add(newBook);
-                        author.setBookList(bookList);
-                        repository.save(author);
-                        System.out.println(UserMessages.savedMessage());
+                        saveNewBook(author,newBook);
                     }else {
                         System.out.println(UserMessages.alreadyExistsMessage());
                     }
@@ -125,8 +133,7 @@ public class Principal {
         }
     }
 
-    private void listSearchedBooks () {
-        List<Book> books= repository.searchAllBooks();
+    private void printBooks (List<Book> books) {
         books.forEach(l -> System.out.printf("""
                 ----- BOOK -----
                 Title: %s
@@ -134,6 +141,11 @@ public class Principal {
                 Language: %s
                 Download count: %d
                 %n""", l.getTitle(),l.getAuthor().getName(),l.getLanguage(),l.getDownloadCount()));
+    }
+
+    private void listSearchedBooks () {
+        List<Book> books= repository.searchAllBooks();
+        printBooks(books);
     }
 
     private void listAuthors () {
@@ -152,9 +164,41 @@ public class Principal {
 
     }
 
-    private void listBooksByLang() {
-
+    private void searchBooksByLang(String lang){
+        List<Book> booksByLang= repository.searchBooksByLang(lang);
+        if (!booksByLang.isEmpty()){
+            System.out.println(UserMessages.booksFound(booksByLang.size()));
+            printBooks(booksByLang);
+        }else {
+            System.out.println(UserMessages.noBooksFound());
+        }
     }
 
+    private void listBooksByLang() {
+        boolean retry=true;
+        while (retry){
+            int option = getOption(UserMessages.langOption());
+            switch (option){
+                case 1:
+                    searchBooksByLang("en");
+                    return;
+                case 2:
+                    searchBooksByLang("es");
+                    return;
+                case 3:
+                    searchBooksByLang("fr");
+                    return;
+                case 4:
+                    searchBooksByLang("pt");
+                    return;
+                case 0:
+                    retry=false;
+                    break;
+                default:
+                    System.out.println(UserMessages.invalidOption());
+                    break;
+            }
+        }
+    }
 
 }
