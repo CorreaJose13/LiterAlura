@@ -7,7 +7,7 @@ public class Input {
         int option=0;
         boolean validInput = false;
         while (!validInput) {
-            System.out.println("Please enter an option:");
+            System.out.println("Please enter an integer:");
             if (reader.hasNextInt()) {
                 option = reader.nextInt();
                 validInput = true;
